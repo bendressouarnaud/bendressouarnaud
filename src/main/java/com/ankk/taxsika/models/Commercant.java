@@ -1,10 +1,13 @@
 package com.ankk.taxsika.models;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Index;
-import jakarta.persistence.Table;
+import com.ankk.taxsika.enums.CommercantType;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Collection;
+import java.util.List;
+
+import static jakarta.persistence.FetchType.LAZY;
 
 @Setter
 @Getter
@@ -16,18 +19,21 @@ import lombok.Setter;
 )
 public class Commercant extends AbstractEntity{
 
-    @Column(name = "nom")
     private String nom;
-
-    @Column(name = "prenom")
     private String prenom;
-
-    @Column(name = "contact")
     private String contact;
-
-    @Column(name = "email")
     private String email;
+    @Enumerated(EnumType.ORDINAL)
+    private CommercantType commercantType; // 0 : PATENTE    ---    1 : JOURNALIER
 
-    @Column(name = "idmai")
-    private Integer idmai;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "mairie_id", nullable = false,
+            foreignKey = @ForeignKey(name = "FK_mairie_commercant"))
+    private Mairie mairie;
+
+    @OneToMany(fetch = LAZY, mappedBy = "commercant")
+    private Collection<Payer> payers;
+
+    @OneToMany(fetch = LAZY, mappedBy = "commercant")
+    private Collection<Louer> louers;
 }
