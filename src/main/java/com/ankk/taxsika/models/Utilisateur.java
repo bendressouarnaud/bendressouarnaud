@@ -22,8 +22,6 @@ public class Utilisateur extends AbstractEntity{
     private String email;
     private String contact;
     @Column(columnDefinition="TEXT", length = 1000)
-    private String identifiant;
-    @Column(columnDefinition="TEXT", length = 1000)
     private String motdepasse;
     private String token;
     private String fcmtoken;
