@@ -11,6 +11,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Entity
 public class Profil extends AbstractEntity{
     private String libelle;
+    private String code;
 
     @OneToMany(fetch = LAZY, mappedBy = "profil")
     private Collection<Utilisateur> utilisateurs;
